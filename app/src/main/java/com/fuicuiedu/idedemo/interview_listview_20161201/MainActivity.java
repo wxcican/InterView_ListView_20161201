@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mLv;
     private List<String> datas;
     private ArrayAdapter<String> mAdapter;
+    private MyAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, datas);
 
-        mLv.setAdapter(mAdapter);
+        myAdapter = new MyAdapter(this,datas);
+
+        mLv.setAdapter(myAdapter);
 
         //动态设置listview高度
 //        setListViewHeight(mLv);
@@ -42,26 +45,26 @@ public class MainActivity extends AppCompatActivity {
 
     //动态设置listview高度
     public void setListViewHeight(ListView listView){
-        //获取lisview对应的Adapter
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null){
-            return;
-        }
-        int totalHeight = 0;
-        for (int i = 0 ;i < listAdapter.getCount(); i++) {
-            //listAdapter。getCount（）返回数据项的数目
-            View listItem = listAdapter.getView(i,null,listView);
-            //测试子项View的宽高，执行完这个方法后，子项的宽高就有了
-            listItem.measure(0,0);
-            //统计所有子项的高度
-            totalHeight += listItem.getMeasuredHeight();
-        }
+            //获取lisview对应的Adapter
+            ListAdapter listAdapter = listView.getAdapter();
+            if (listAdapter == null){
+                return;
+            }
+            int totalHeight = 0;
+            for (int i = 0 ;i < listAdapter.getCount(); i++) {
+                //listAdapter。getCount（）返回数据项的数目
+                View listItem = listAdapter.getView(i,null,listView);
+                //测试子项View的宽高，执行完这个方法后，子项的宽高就有了
+                listItem.measure(0,0);
+                //统计所有子项的高度
+                totalHeight += listItem.getMeasuredHeight();
+            }
 
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        //listView.getDividerHeight()获取子项间分隔符占用的高度
-        int dividerHeight = (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        params.height = totalHeight + dividerHeight;
-        listView.setLayoutParams(params);
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            //listView.getDividerHeight()获取子项间分隔符占用的高度
+            int dividerHeight = (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+            params.height = totalHeight + dividerHeight;
+            listView.setLayoutParams(params);
     }
 
 

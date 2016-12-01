@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!--格式化 ： CTRL + ALT + L-->
-    <com.fuicuiedu.idedemo.interview_listview_20161201.MyListView
+    <ListView
         android:id="@+id/main_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</ScrollView>
+</LinearLayout>
