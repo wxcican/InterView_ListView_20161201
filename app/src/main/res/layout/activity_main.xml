@@ -4,18 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <!--格式化 ： CTRL + ALT + L-->
+    <com.fuicuiedu.idedemo.interview_listview_20161201.MyListView
+        android:id="@+id/main_lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--格式化 ： CTRL + ALT + L-->
-
-        <ListView
-            android:id="@+id/main_lv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-
+        android:layout_height="match_parent" />
 
 </ScrollView>
