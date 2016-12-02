@@ -3,9 +3,11 @@ package com.fuicuiedu.idedemo.interview_listview_20161201;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> mAdapter;
     private MyAdapter myAdapter;
     private Handler handler;
+    private int visblelastIndex;//最后一条数据下标
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +46,53 @@ public class MainActivity extends AppCompatActivity {
 
         myAdapter = new MyAdapter(this,datas);
 
-        //加上加载更多的View
-        addMoreView(mLv);
+        mLv.setOnScrollListener(listener);
 
         mLv.setAdapter(myAdapter);
 
-        //动态设置listview高度
-//        setListViewHeight(mLv);
     }
+
+
+    //当用户滑动listView到底部时自动加载
+//    //手指按下移动的状态
+//    SCROLL_STATE_TOUCH_SCROLL;//触摸滑动
+//    //惯性滚动状态
+//    SCROLL_STATE_FLING;//滑翔
+//    //静止状态
+//    SCROLL_STATE_IDLE;//静止
+//
+//    目的：当用户滑动listView到底部时自动加载
+//    实现：判断是否是静止状态，是否滑动到了底部（最后数据）
+    private AbsListView.OnScrollListener listener = new AbsListView.OnScrollListener() {
+        //滚动状态发生变化
+        @Override
+        public void onScrollStateChanged(AbsListView absListView, int i) {
+            //最后一条数据，下标
+            int lastIndex = myAdapter.getCount() - 1;
+            //判断是否是静止状态，是否滑动到了底部（最后数据）
+//            if (i == SCROLL_STATE_IDLE && 是否是最后一条数据){
+//                loadMoreData();
+//                myAdapter.notifyDataSetChanged();
+//            }
+        }
+
+        //当listveiw被滚动时调用的方法
+        //i:firstVisbleItem;//第一个可见的item
+        //i1:visiblewItemCount;//可见的item数量
+        //i2:totalItemCount;//所有数据条目
+        @Override
+        public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+            //可见的最后一个item下标
+            visblelastIndex = i + i1 - 1;
+
+
+            Log.e("=======================","==========================");//单行复制，ctrl + d
+            Log.e("firstVisbleItem = " , i + "");
+            Log.e("visiblewItemCount = " , i1 + "");
+            Log.e("totalItemCount = " , i2 + "");
+            Log.e("=======================","==========================");
+        }
+    };
 
 
     //加上加载更多的View
