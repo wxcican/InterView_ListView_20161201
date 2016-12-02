@@ -2,11 +2,14 @@ package com.fuicuiedu.idedemo.interview_listview_20161201;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +39,34 @@ public class MainActivity extends AppCompatActivity {
 
         myAdapter = new MyAdapter(this,datas);
 
+        //加上加载更多的View
+        addMoreView(mLv);
+
         mLv.setAdapter(myAdapter);
 
         //动态设置listview高度
 //        setListViewHeight(mLv);
+    }
+
+
+    //加上加载更多的View
+    private void addMoreView(ListView listView){
+        //拿到加载更多的View
+        View view = LayoutInflater.from(getApplicationContext())
+                .inflate(R.layout.view_more,null);
+        //给ListView添加footer布局
+        listView.addFooterView(view);
+
+        Button moreBtn = (Button) view.findViewById(R.id.view_more_btn);
+        ProgressBar morePrb = (ProgressBar) view.findViewById(R.id.view_more_prb);
+
+        moreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //视图操作，显示和隐藏
+                //模拟网络加载数据
+            }
+        });
     }
 
 
