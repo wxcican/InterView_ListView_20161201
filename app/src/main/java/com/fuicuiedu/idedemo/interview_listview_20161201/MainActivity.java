@@ -1,5 +1,6 @@
 package com.fuicuiedu.idedemo.interview_listview_20161201;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,11 +21,14 @@ public class MainActivity extends AppCompatActivity {
     private List<String> datas;
     private ArrayAdapter<String> mAdapter;
     private MyAdapter myAdapter;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        handler = new Handler();
 
         mLv = (ListView) findViewById(R.id.main_lv);
 
@@ -57,16 +61,36 @@ public class MainActivity extends AppCompatActivity {
         //给ListView添加footer布局
         listView.addFooterView(view);
 
-        Button moreBtn = (Button) view.findViewById(R.id.view_more_btn);
-        ProgressBar morePrb = (ProgressBar) view.findViewById(R.id.view_more_prb);
+        final Button moreBtn = (Button) view.findViewById(R.id.view_more_btn);
+        final ProgressBar morePrb = (ProgressBar) view.findViewById(R.id.view_more_prb);
 
         moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //视图操作，显示和隐藏
-                //模拟网络加载数据
+                moreBtn.setVisibility(View.INVISIBLE);
+                morePrb.setVisibility(View.VISIBLE);
+                //模拟网络加载数据,用handler发送一个延迟的任务
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //加载更多
+                        loadMoreData();
+                        moreBtn.setVisibility(View.VISIBLE);
+                        morePrb.setVisibility(View.INVISIBLE);
+                        //刷新数据
+                        myAdapter.notifyDataSetChanged();
+                    }
+                },2000);
             }
         });
+    }
+
+    //加载更多的方法
+    private void loadMoreData(){
+        for (int i = 0; i < 5; i++) {
+            datas.add("第" + i + "条数据（新）");
+        }
     }
 
 
