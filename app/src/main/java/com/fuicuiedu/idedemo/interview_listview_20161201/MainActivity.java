@@ -67,13 +67,13 @@ public class MainActivity extends AppCompatActivity {
         //滚动状态发生变化
         @Override
         public void onScrollStateChanged(AbsListView absListView, int i) {
-            //最后一条数据，下标
+            //数据最后一条下标
             int lastIndex = myAdapter.getCount() - 1;
             //判断是否是静止状态，是否滑动到了底部（最后数据）
-//            if (i == SCROLL_STATE_IDLE && 是否是最后一条数据){
-//                loadMoreData();
-//                myAdapter.notifyDataSetChanged();
-//            }
+            if (i == SCROLL_STATE_IDLE && visblelastIndex == lastIndex){
+                loadMoreData();
+                myAdapter.notifyDataSetChanged();
+            }
         }
 
         //当listveiw被滚动时调用的方法
@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             //可见的最后一个item下标
             visblelastIndex = i + i1 - 1;
 
-
             Log.e("=======================","==========================");//单行复制，ctrl + d
             Log.e("firstVisbleItem = " , i + "");
             Log.e("visiblewItemCount = " , i1 + "");
@@ -93,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
             Log.e("=======================","==========================");
         }
     };
-
 
     //加上加载更多的View
     private void addMoreView(ListView listView){
